@@ -10,8 +10,6 @@ namespace WaterTracker.Views
         {
             HomeViewModel vm = new HomeViewModel();
             this.DataContext = vm;
-            //WaterRepository wr = new WaterRepository();
-            //wr.InitializeAsync();
             InitializeComponent();
         }
     }

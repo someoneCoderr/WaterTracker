@@ -30,7 +30,7 @@ namespace WaterTracker.ViewModel
         public int TodayTotalMl
         {
             get => _todayTotalMl;
-            private set { _todayTotalMl = value; OnPropertyChanged(); RecalcProgress(); }
+            set { _todayTotalMl = value; OnPropertyChanged(); RecalcProgress(); }
         }
 
         private double _progressPercent;
