@@ -9,24 +9,20 @@ namespace AppRunner.MVVM
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action _execute;
-        private readonly Func<bool>? _canExecute;
-
-        public RelayCommand(Action execute, Func<bool>? canExecute = null)
-        {
-            _execute = execute;
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object? parameter)
-            => _canExecute == null || _canExecute();
-
-        public void Execute(object? parameter)
-            => _execute();
+        private readonly Func<object?, Task>? _asyncExecute;
+        private readonly Action<object?>? _execute;
 
         public event EventHandler? CanExecuteChanged;
 
-        public void RaiseCanExecuteChanged()
-            => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public RelayCommand(Action<object?> execute) => _execute = execute;
+        public RelayCommand(Func<object?, Task> asyncExecute) => _asyncExecute = asyncExecute;
+
+        public bool CanExecute(object? parameter) => true;
+
+        public async void Execute(object? parameter)
+        {
+            if (_asyncExecute != null) await _asyncExecute(parameter);
+            else _execute?.Invoke(parameter);
+        }
     }
 }
