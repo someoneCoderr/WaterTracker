@@ -23,22 +23,40 @@ namespace WaterTracker.ViewModel
         public int DailyGoalMl
         {
             get => _dailyGoalMl;
-            set { _dailyGoalMl = value; OnPropertyChanged(); RecalcProgress(); }
+            set
+            {
+                _dailyGoalMl = value;
+                OnPropertyChanged(nameof(DailyGoalMl));
+                RecalcProgress();
+            }
         }
+
 
         private int _todayTotalMl;
         public int TodayTotalMl
         {
             get => _todayTotalMl;
-            set { _todayTotalMl = value; OnPropertyChanged(); RecalcProgress(); }
+            set
+            {
+                _todayTotalMl = value;
+                OnPropertyChanged(nameof(TodayTotalMl));
+                RecalcProgress();
+            }
         }
+
 
         private double _progressPercent;
         public double ProgressPercent
         {
             get => _progressPercent;
-            private set { _progressPercent = value; OnPropertyChanged(); }
+            private set
+            {
+                _progressPercent = value;
+                OnPropertyChanged(nameof(ProgressPercent));
+                OnPropertyChanged(nameof(ProgressText));
+            }
         }
+
 
         public string ProgressText => $"{ProgressPercent:0}% erreicht";
 
@@ -46,14 +64,14 @@ namespace WaterTracker.ViewModel
         public string CustomAmountText
         {
             get => _customAmountText;
-            set { _customAmountText = value; OnPropertyChanged(); }
+            set { _customAmountText = value; OnPropertyChanged(nameof(CustomAmountText)); }
         }
 
         private string _errorText = "";
         public string ErrorText
         {
             get => _errorText;
-            private set { _errorText = value; OnPropertyChanged(); }
+            private set { _errorText = value; OnPropertyChanged(nameof(ErrorText)); }
         }
 
         private DateTime _selectedDate = DateTime.Today;
