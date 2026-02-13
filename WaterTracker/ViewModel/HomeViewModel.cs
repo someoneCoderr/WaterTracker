@@ -26,11 +26,10 @@ namespace WaterTracker.ViewModel
             set
             {
                 _dailyGoalMl = value;
-                OnPropertyChanged(nameof(DailyGoalMl));
+                OnPropertyChanged();
                 RecalcProgress();
             }
         }
-
 
         private int _todayTotalMl;
         public int TodayTotalMl
@@ -39,11 +38,10 @@ namespace WaterTracker.ViewModel
             set
             {
                 _todayTotalMl = value;
-                OnPropertyChanged(nameof(TodayTotalMl));
+                OnPropertyChanged();
                 RecalcProgress();
             }
         }
-
 
         private double _progressPercent;
         public double ProgressPercent
