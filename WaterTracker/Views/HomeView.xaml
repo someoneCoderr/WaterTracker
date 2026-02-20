@@ -7,7 +7,7 @@
         xmlns:viewModel="clr-namespace:WaterTracker.ViewModel"
         d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
         mc:Ignorable="d"
-        Title="WaterTracker"  Height="620" Width="500">
+        Title="WaterTracker" MinHeight="700" MinWidth="500">
     <Window.Resources>
         <!-- Farben -->
         <SolidColorBrush x:Key="BgBrush" Color="#0F172A"/>
@@ -65,7 +65,7 @@
     </Window.Resources>
 
     <Grid Background="#0F172A">
-        <Grid Margin="16">
+        <Grid Margin="16" MinHeight="620" MaxHeight="1000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -81,18 +81,18 @@
                         <TextBlock Text="{Binding TodayTotalMl}" Foreground="{StaticResource TextBrush}" FontSize="28" FontWeight="Bold"/>
                         <TextBlock Text="ml" Foreground="{StaticResource TextMutedBrush}" FontSize="16" Margin="6,12,0,0"/>
                         <TextBlock Text=" / " Foreground="{StaticResource TextMutedBrush}" FontSize="16" Margin="10,12,0,0"/>
-                    <TextBlock Text="{Binding DailyGoalMl}" Foreground="{StaticResource TextMutedBrush}" FontSize="16" Margin="0,12,0,0"/>
+                        <TextBlock Text="{Binding DailyGoalMl}" Foreground="{StaticResource TextMutedBrush}" FontSize="16" Margin="0,12,0,0"/>
                         <TextBlock Text="ml" Foreground="{StaticResource TextMutedBrush}" FontSize="16" Margin="6,12,0,0"/>
                     </StackPanel>
 
                     <ProgressBar Height="14" Maximum="100"
-                             Value="{Binding ProgressPercent, Mode=OneWay}"
-                             Background="#0B1222"
-                             Foreground="{StaticResource AccentBrush}"/>
+                            Value="{Binding ProgressPercent, Mode=OneWay}"
+                            Background="#0B1222"
+                            Foreground="{StaticResource AccentBrush}"/>
 
                     <TextBlock Margin="0,10,0,0"
-                           Foreground="{StaticResource TextMutedBrush}"
-                           Text="{Binding ProgressText}"/>
+                        Foreground="{StaticResource TextMutedBrush}"
+                        Text="{Binding ProgressText}"/>
                 </StackPanel>
             </Border>
 
@@ -100,12 +100,11 @@
             <Border Style="{StaticResource Card}" Grid.Row="1">
                 <StackPanel>
                     <TextBlock Text="Schnell hinzufügen" Foreground="{StaticResource TextBrush}" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                    <UniformGrid Columns="5" Rows="1" HorizontalAlignment="Stretch">
+                    <UniformGrid Columns="4" Rows="1" HorizontalAlignment="Stretch">
                         <Button Style="{StaticResource QuickButton}" Content="+100" Command="{Binding AddPresetCommand}" CommandParameter="100"/>
-                        <Button Style="{StaticResource QuickButton}" Content="+200" Command="{Binding AddPresetCommand}" CommandParameter="200"/>
                         <Button Style="{StaticResource QuickButton}" Content="+250" Command="{Binding AddPresetCommand}" CommandParameter="250"/>
-                        <Button Style="{StaticResource QuickButton}" Content="+330" Command="{Binding AddPresetCommand}" CommandParameter="330"/>
                         <Button Style="{StaticResource QuickButton}" Content="+500" Command="{Binding AddPresetCommand}" CommandParameter="500"/>
+                        <Button Style="{StaticResource QuickButton}" Content="+750" Command="{Binding AddPresetCommand}" CommandParameter="750"/>
                     </UniformGrid>
                 </StackPanel>
             </Border>
@@ -123,29 +122,30 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox Grid.Column="0"
-                             Text="{Binding CustomAmountText, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,0,12,0"/>
+                            Text="{Binding CustomAmountText, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Margin="0,0,12,0"/>
 
                         <Button Grid.Column="2"
-                            Style="{StaticResource PrimaryButton}"
-                            Content="Hinzufügen"
-                            Command="{Binding AddCustomCommand}" Grid.ColumnSpan="2"/>
+                        Style="{StaticResource PrimaryButton}"
+                        Content="Hinzufügen"
+                        Command="{Binding AddCustomCommand}" Grid.ColumnSpan="2"/>
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <TextBlock Text="{Binding ErrorText}" Foreground="#FF6B6B"/>
                         <Button Content="Ziel ändern"
-                            Background="Transparent"
-                            Foreground="{StaticResource AccentBrush}"
-                            BorderThickness="0"
-                            Cursor="Hand"
-                            Command="{Binding OpenGoalCommand}"/>
+                        Background="Transparent"
+                        Foreground="{StaticResource AccentBrush}"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Command="{Binding OpenGoalCommand}"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
             <!-- HISTORY -->
-            <Border Style="{StaticResource Card}" Grid.Row="3">
-                <Expander IsExpanded="True" Background="Transparent" Foreground="{StaticResource TextBrush}">
+            <Border Style="{StaticResource Card}" Grid.Row="3" MinHeight="100"
+                    BorderBrush="{StaticResource BorderBrush}">
+                <Expander IsExpanded="True" Background="Transparent" Foreground="{StaticResource TextBrush}" DockPanel.Dock="Top">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="History" FontWeight="SemiBold"/>
@@ -153,10 +153,15 @@
                         </StackPanel>
                     </Expander.Header>
 
-                    <StackPanel Margin="0,10,0,0">
-                        <DatePicker SelectedDate="{Binding SelectedDate}" />
+                    <DockPanel Margin="0,10,0,0" LastChildFill="True">
+                        <DatePicker SelectedDate="{Binding SelectedDate}" DockPanel.Dock="Top"/>
 
-                        <ListView ItemsSource="{Binding Entries}" Margin="0,10,0,0" Background="#0B1222" BorderBrush="{StaticResource BorderBrush}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{Binding Entries}" 
+                                Margin="0,10,0,0" 
+                                Background="#0B1222" 
+                                BorderBrush="{StaticResource BorderBrush}" 
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel Margin="10,6">
@@ -166,7 +171,7 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                    </StackPanel>
+                    </DockPanel>
                 </Expander>
             </Border>
         </Grid>
