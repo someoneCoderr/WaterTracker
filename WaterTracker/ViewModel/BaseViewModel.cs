@@ -4,11 +4,17 @@ using System.Windows;
 
 namespace WaterTracker.ViewModel
 {
-    public class BaseViewModel : INotifyPropertyChanged
-{
-    public event PropertyChangedEventHandler? PropertyChanged;
+    public class BaseViewModel
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-}
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+        {
+            if (Application.Current?.Dispatcher?.CheckAccess() == true)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            else
+                Application.Current?.Dispatcher?.Invoke(() =>
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)));
+        }
+    }
 }

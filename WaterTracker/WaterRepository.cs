@@ -49,7 +49,7 @@ namespace WaterTracker
 
             var cmd = con.CreateCommand();
             cmd.CommandText = @"INSERT INTO WaterEntry (Timestamp, AmountMl) VALUES ($ts, $ml);";
-            cmd.Parameters.AddWithValue("$ts", timestamp.ToString("o"));
+            cmd.Parameters.AddWithValue("$ts", timestamp.ToString("o")); // ISO format
             cmd.Parameters.AddWithValue("$ml", amountMl);
 
             await cmd.ExecuteNonQueryAsync();
