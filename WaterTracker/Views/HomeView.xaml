@@ -165,8 +165,16 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel Margin="10,6">
-                                        <TextBlock Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" DockPanel.Dock="Left" Width="70"/>
-                                        <TextBlock Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
+                                            <Image Grid.Column="2" Source="/Resources/editWhite.png" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" />
+                                        </Grid>
                                     </DockPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
