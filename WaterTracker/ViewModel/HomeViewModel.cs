@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WaterTracker.ViewModel;
 
@@ -18,6 +19,18 @@ namespace WaterTracker.ViewModel
         private readonly WaterRepository _repo;
 
         public ObservableCollection<WaterEntryItemVm> Entries { get; } = new();
+
+        public WaterEntryItemVm SelectedWaterEntry 
+        {
+            get { return _selectedWaterEntry; } 
+            set 
+            { 
+                _selectedWaterEntry = value; 
+                OnPropertyChanged(nameof(SelectedWaterEntry));
+                MessageBox.Show("selected Waterentry" + _selectedWaterEntry.AmountText);
+            }
+
+        }
 
         private int _dailyGoalMl = 2500;
         public int DailyGoalMl
@@ -73,6 +86,8 @@ namespace WaterTracker.ViewModel
         }
 
         private DateTime _selectedDate = DateTime.Today;
+        private WaterEntryItemVm _selectedWaterEntry;
+
         public DateTime SelectedDate
         {
             get => _selectedDate;

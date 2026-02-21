@@ -156,29 +156,30 @@
                     <DockPanel Margin="0,10,0,0" LastChildFill="True">
                         <DatePicker SelectedDate="{Binding SelectedDate}" DockPanel.Dock="Top"/>
 
-                        <ListView ItemsSource="{Binding Entries}" 
+                        <ListBox ItemsSource="{Binding Entries}"
+                                 SelectedItem="{Binding SelectedWaterEntry}"
                                 Margin="0,10,0,0" 
                                 Background="#0B1222" 
                                 BorderBrush="{StaticResource BorderBrush}" 
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListView.ItemTemplate>
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <DockPanel Margin="10,6">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
-                                            <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
-                                            <Image Grid.Column="2" Source="/Resources/editWhite.png" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" />
-                                        </Grid>
-                                    </DockPanel>
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
+                                        <Button Grid.Column="2" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" Background="Transparent" BorderThickness="0">
+                                            <Image Source="/Resources/editWhite.png" Width="16" Height="16"/>
+                                        </Button>
+                                    </Grid>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </DockPanel>
                 </Expander>
             </Border>
