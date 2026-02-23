@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WaterTracker.ViewModel;
+using WaterTracker.Views;
 
 namespace WaterTracker.ViewModel
 {
@@ -189,6 +190,8 @@ namespace WaterTracker.ViewModel
         public void EditEntry()
         {
             MessageBox.Show("selected Waterentry" + SelectedWaterEntry.AmountText);
+            EditDialog editDialog = new EditDialog();
+            editDialog.ShowDialog();
         }
     }
 

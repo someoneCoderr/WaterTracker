@@ -3,10 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WaterTracker.Views"
+        xmlns:local="clr-namespace:WaterTracker"
+        xmlns:viewModel="clr-namespace:WaterTracker.ViewModel"
         mc:Ignorable="d"
-        Title="EditDialog" Height="450" Width="800">
-    <Grid>
+        Title="WaterTracker" Height="450" Width="800">
+    
+    <Grid Background="{StaticResource BgBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Edit Dialog" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"
+                   Foreground="{StaticResource TextBrush}"/>
+        <TextBox Text="Edit Dialog" Grid.Row="1" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Center" FontSize="24"/>
+        <TextBlock Text="Edit Dialog" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"
+                   Foreground="{StaticResource TextBrush}"/>
+        <TextBox Text="Edit Dialog" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
         
+        <Button Content="Close" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
+                Style="{StaticResource PrimaryButton}"/>
+        <Button Content="Save" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
+                Style="{StaticResource PrimaryButton}"/>
     </Grid>
 </Window>
