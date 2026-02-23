@@ -173,7 +173,9 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
                                         <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
-                                        <Button Grid.Column="2" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" Background="Transparent" BorderThickness="0">
+                                        <Button Grid.Column="2" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" 
+                                                Background="Transparent" BorderThickness="0"
+                                                Command="{Binding DataContext.EditEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
                                             <Image Source="/Resources/editWhite.png" Width="16" Height="16"/>
                                         </Button>
                                     </Grid>

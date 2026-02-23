@@ -54,7 +54,7 @@ namespace WaterTracker
 
             await cmd.ExecuteNonQueryAsync();
         }
-
+        
         public async Task<int> GetTotalForDateAsync(DateTime date)
         {
             var from = date.Date;

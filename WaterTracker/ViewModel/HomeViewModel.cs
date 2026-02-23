@@ -27,7 +27,6 @@ namespace WaterTracker.ViewModel
             { 
                 _selectedWaterEntry = value; 
                 OnPropertyChanged(nameof(SelectedWaterEntry));
-                MessageBox.Show("selected Waterentry" + _selectedWaterEntry.AmountText);
             }
 
         }
@@ -99,6 +98,7 @@ namespace WaterTracker.ViewModel
         public ICommand AddPresetCommand { get; }
         public ICommand AddCustomCommand { get; }
         public ICommand OpenGoalCommand { get; }
+        public ICommand EditEntryCommand { get; }
 
         public HomeViewModel()
         {
@@ -107,6 +107,7 @@ namespace WaterTracker.ViewModel
             AddPresetCommand = new RelayCommand(async p => await AddPresetAsync(p));
             AddCustomCommand = new RelayCommand(async _ => await AddCustomAsync());
             OpenGoalCommand = new RelayCommand(_ => ChangeGoalSimple());
+            EditEntryCommand = new RelayCommand(_ => EditEntry());      
 
             _ = InitializeAsync();
         }
@@ -183,6 +184,11 @@ namespace WaterTracker.ViewModel
         {
             DailyGoalMl = (DailyGoalMl == 2500) ? 3000 : 2500;
             _ = _repo.SetDailyGoalAsync(DailyGoalMl);
+        }
+
+        public void EditEntry()
+        {
+            MessageBox.Show("selected Waterentry" + SelectedWaterEntry.AmountText);
         }
     }
 
