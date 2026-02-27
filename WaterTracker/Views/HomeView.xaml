@@ -107,7 +107,8 @@
                                 Background="#0B1222" 
                                 BorderBrush="{StaticResource BorderBrush}" 
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                Name="lb">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="10">
@@ -120,10 +121,17 @@
                                         <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
                                         <Button Grid.Column="2" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" 
                                                 Background="Transparent" BorderThickness="0"
-                                                Command="{Binding DataContext.EditEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}">
+                                                Command="{Binding DataContext.EditEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                Visibility="Collapsed"
+                                                Name="EditButton">
                                             <Image Source="/Resources/editWhite.png" Width="16" Height="16"/>
                                         </Button>
                                     </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                            <Setter TargetName="EditButton" Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
