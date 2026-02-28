@@ -117,6 +117,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
                                         <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
@@ -127,10 +128,18 @@
                                                 Name="EditButton">
                                             <Image Source="/Resources/edit.png" Width="16" Height="16"/>
                                         </Button>
+                                        <Button Grid.Column="3" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" 
+                                                Background="Transparent" BorderThickness="0"
+                                                Command="{Binding DataContext.DeleteEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                Visibility="Collapsed"
+                                                Name="DeleteButton">
+                                            <Image Source="/Resources/delete.png" Width="16" Height="16"/>
+                                        </Button>
                                     </Grid>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
                                             <Setter TargetName="EditButton" Property="Visibility" Value="Visible"/>
+                                            <Setter TargetName="DeleteButton" Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>

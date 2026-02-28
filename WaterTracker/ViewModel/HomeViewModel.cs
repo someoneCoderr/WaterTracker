@@ -100,6 +100,7 @@ namespace WaterTracker.ViewModel
         public ICommand AddCustomCommand { get; }
         public ICommand OpenGoalCommand { get; }
         public ICommand EditEntryCommand { get; }
+        public ICommand DeleteEntryCommand { get; }
 
         public HomeViewModel()
         {
@@ -108,7 +109,8 @@ namespace WaterTracker.ViewModel
             AddPresetCommand = new RelayCommand(async p => await AddPresetAsync(p));
             AddCustomCommand = new RelayCommand(async _ => await AddCustomAsync());
             OpenGoalCommand = new RelayCommand(_ => ChangeGoalSimple());
-            EditEntryCommand = new RelayCommand(_ => EditEntry());      
+            EditEntryCommand = new RelayCommand(_ => EditEntry());
+            DeleteEntryCommand = new RelayCommand(async _ => await DeleteEntryAsync());
 
             _ = InitializeAsync();
         }
@@ -198,26 +200,16 @@ namespace WaterTracker.ViewModel
             // ShowDialog() stops the code here, so event subscribing must be done before (error like in Metrohm)
             editDialog.ShowDialog();
         }
-    }
 
-    public class WaterEntryItemVm : BaseViewModel
-    {
-        private WaterEntry _entry;
-        public WaterEntryItemVm(WaterEntry entry)
+        public async Task DeleteEntryAsync()
         {
-            _entry = entry;
-        }
-
-        public string TimeText => _entry.Timestamp.ToString("HH:mm");
-        public string AmountText => $"{_entry.AmountMl} ml";
-
-        public WaterEntry Entry
-        {
-            get { return _entry; }
-            set
+            if (SelectedWaterEntry is null) return;
+            var result = MessageBox.Show($"Eintrag von {SelectedWaterEntry.Entry.Timestamp:HH:mm} mit {SelectedWaterEntry.Entry.AmountMl} ml löschen?", "Eintrag löschen", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                _entry = value;
-                OnPropertyChanged();
+                await _repo.DeleteEntryAsync(SelectedWaterEntry.Entry.Id);
+                await LoadTodayAsync();
+                await LoadEntriesForDateAsync(SelectedDate);
             }
         }
     }

@@ -54,7 +54,7 @@ namespace WaterTracker
 
             await cmd.ExecuteNonQueryAsync();
         }
-        
+
         public async Task<int> GetTotalForDateAsync(DateTime date)
         {
             var from = date.Date;
@@ -164,12 +164,23 @@ namespace WaterTracker
             cmd.Parameters.AddWithValue("$id", entry.Id);
             await cmd.ExecuteNonQueryAsync();
         }
-    }
 
-    public class WaterEntry
-    {
-        public int Id { get; set; }
-        public DateTime Timestamp { get; set; }
-        public int AmountMl { get; set; }
+        public async Task DeleteEntryAsync(int id)
+        {
+            using var con = CreateConnection();
+            await con.OpenAsync();
+            var cmd = con.CreateCommand();
+            cmd.CommandText =
+                @"DELETE FROM WaterEntry WHERE Id = $id;";
+            cmd.Parameters.AddWithValue("$id", id);
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        public class WaterEntry
+        {
+            public int Id { get; set; }
+            public DateTime Timestamp { get; set; }
+            public int AmountMl { get; set; }
+        }
     }
 }
