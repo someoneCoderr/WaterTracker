@@ -8,8 +8,10 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WaterTracker.ViewModel;
+using WaterTracker.Views;
 
 namespace WaterTracker.ViewModel
 {
@@ -18,6 +20,17 @@ namespace WaterTracker.ViewModel
         private readonly WaterRepository _repo;
 
         public ObservableCollection<WaterEntryItemVm> Entries { get; } = new();
+
+        public WaterEntryItemVm SelectedWaterEntry 
+        {
+            get { return _selectedWaterEntry; } 
+            set 
+            { 
+                _selectedWaterEntry = value; 
+                OnPropertyChanged(nameof(SelectedWaterEntry));
+            }
+
+        }
 
         private int _dailyGoalMl = 2500;
         public int DailyGoalMl
@@ -73,6 +86,8 @@ namespace WaterTracker.ViewModel
         }
 
         private DateTime _selectedDate = DateTime.Today;
+        private WaterEntryItemVm _selectedWaterEntry;
+
         public DateTime SelectedDate
         {
             get => _selectedDate;
@@ -84,6 +99,7 @@ namespace WaterTracker.ViewModel
         public ICommand AddPresetCommand { get; }
         public ICommand AddCustomCommand { get; }
         public ICommand OpenGoalCommand { get; }
+        public ICommand EditEntryCommand { get; }
 
         public HomeViewModel()
         {
@@ -92,6 +108,7 @@ namespace WaterTracker.ViewModel
             AddPresetCommand = new RelayCommand(async p => await AddPresetAsync(p));
             AddCustomCommand = new RelayCommand(async _ => await AddCustomAsync());
             OpenGoalCommand = new RelayCommand(_ => ChangeGoalSimple());
+            EditEntryCommand = new RelayCommand(_ => EditEntry());      
 
             _ = InitializeAsync();
         }
@@ -162,21 +179,46 @@ namespace WaterTracker.ViewModel
             ProgressPercent = Math.Min(100, (double)TodayTotalMl / DailyGoalMl * 100.0);
         }
 
-        // Start-simple UX: Ziel direkt um 500 ml erhöhen (placeholder).
-        // Als nächstes machen wir daraus ein schönes Dialog-Fenster.
         private void ChangeGoalSimple()
         {
             DailyGoalMl = (DailyGoalMl == 2500) ? 3000 : 2500;
             _ = _repo.SetDailyGoalAsync(DailyGoalMl);
         }
+
+        public void EditEntry()
+        {
+            EditDialogViewModel vm = new EditDialogViewModel(SelectedWaterEntry, _repo);
+            EditDialog editDialog = new EditDialog(vm);
+            vm.closeDialogEvent += (s, e) =>
+            {
+                editDialog.Close();
+                _ = LoadTodayAsync();
+                _ = LoadEntriesForDateAsync(SelectedDate);
+            };
+            // ShowDialog() stops the code here, so event subscribing must be done before (error like in Metrohm)
+            editDialog.ShowDialog();
+        }
     }
 
-    public class WaterEntryItemVm
+    public class WaterEntryItemVm : BaseViewModel
     {
-        private readonly WaterEntry _entry;
-        public WaterEntryItemVm(WaterEntry entry) => _entry = entry;
+        private WaterEntry _entry;
+        public WaterEntryItemVm(WaterEntry entry)
+        {
+            _entry = entry;
+        }
 
         public string TimeText => _entry.Timestamp.ToString("HH:mm");
         public string AmountText => $"{_entry.AmountMl} ml";
+
+        public WaterEntry Entry
+        {
+            get { return _entry; }
+            set
+            {
+                _entry = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

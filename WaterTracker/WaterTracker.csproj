@@ -9,12 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\edit.png" />
+    <None Remove="Resources\editWhite.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="WaterRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="10.0.3" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\edit.png" />
+    <Resource Include="Resources\editWhite.png" />
   </ItemGroup>
 
 </Project>

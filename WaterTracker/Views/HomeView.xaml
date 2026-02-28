@@ -8,61 +8,6 @@
         d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
         mc:Ignorable="d"
         Title="WaterTracker" MinHeight="700" MinWidth="500">
-    <Window.Resources>
-        <!-- Farben -->
-        <SolidColorBrush x:Key="BgBrush" Color="#0F172A"/>
-        <SolidColorBrush x:Key="CardBrush" Color="#111C33"/>
-        <SolidColorBrush x:Key="BorderBrush" Color="#22304D"/>
-        <SolidColorBrush x:Key="TextBrush" Color="#E6EDF7"/>
-        <SolidColorBrush x:Key="TextMutedBrush" Color="#9FB1CC"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#1DA1FF"/>
-        <!-- Wasser-Blau -->
-
-        <!-- Card-Style -->
-        <Style x:Key="Card" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="16"/>
-            <Setter Property="Padding" Value="16"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
-        </Style>
-
-        <!-- Buttons -->
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="QuickButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
-            <Setter Property="Background" Value="#163B66"/>
-            <Setter Property="Padding" Value="10,10"/>
-            <Setter Property="Margin" Value="5, 0"/>
-        </Style>
-
-        <!-- TextBox -->
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#0B1222"/>
-            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="10,8"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-    </Window.Resources>
 
     <Grid Background="#0F172A">
         <Grid Margin="16" MinHeight="620" MaxHeight="1000">
@@ -156,21 +101,40 @@
                     <DockPanel Margin="0,10,0,0" LastChildFill="True">
                         <DatePicker SelectedDate="{Binding SelectedDate}" DockPanel.Dock="Top"/>
 
-                        <ListView ItemsSource="{Binding Entries}" 
+                        <ListBox ItemsSource="{Binding Entries}"
+                                 SelectedItem="{Binding SelectedWaterEntry}"
                                 Margin="0,10,0,0" 
                                 Background="#0B1222" 
                                 BorderBrush="{StaticResource BorderBrush}" 
                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListView.ItemTemplate>
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                Name="lb">
+                            <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <DockPanel Margin="10,6">
-                                        <TextBlock Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" DockPanel.Dock="Left" Width="70"/>
-                                        <TextBlock Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
-                                    </DockPanel>
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding TimeText}" Foreground="{StaticResource TextMutedBrush}" Width="70"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding AmountText}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/>
+                                        <Button Grid.Column="2" Width="16" Height="16" Margin="10,0,0,0" Cursor="Hand" 
+                                                Background="Transparent" BorderThickness="0"
+                                                Command="{Binding DataContext.EditEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                Visibility="Collapsed"
+                                                Name="EditButton">
+                                            <Image Source="/Resources/edit.png" Width="16" Height="16"/>
+                                        </Button>
+                                    </Grid>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                            <Setter TargetName="EditButton" Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </DockPanel>
                 </Expander>
             </Border>

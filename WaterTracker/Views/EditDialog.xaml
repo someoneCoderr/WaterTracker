@@ -1,0 +1,41 @@
+﻿<Window x:Class="WaterTracker.Views.EditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WaterTracker"
+        xmlns:viewModel="clr-namespace:WaterTracker.ViewModel"
+        mc:Ignorable="d"
+        Title="WaterTracker" Height="450" Width="800">
+    
+    <Grid Background="{StaticResource BgBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Amount" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"
+                   Foreground="{StaticResource TextBrush}"/>
+        <TextBox Text="{Binding WaterEntryProp.Entry.AmountMl}" Grid.Row="1" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Center" FontSize="24"/>
+        <TextBlock Text="Time" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"
+                   Foreground="{StaticResource TextBrush}"/>
+        <TextBox Text="{Binding WaterEntryProp.Entry.Timestamp}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        
+        <Button Content="Cnacel" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
+                Style="{StaticResource PrimaryButton}"
+                Command="{Binding CloseDialogCommand}"/>
+        <Button Content="Save" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
+                Style="{StaticResource PrimaryButton}"
+                Command="{Binding UpdateEntryCommand}"/>
+    </Grid>
+</Window>

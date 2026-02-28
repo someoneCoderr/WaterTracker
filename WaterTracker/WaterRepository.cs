@@ -49,12 +49,12 @@ namespace WaterTracker
 
             var cmd = con.CreateCommand();
             cmd.CommandText = @"INSERT INTO WaterEntry (Timestamp, AmountMl) VALUES ($ts, $ml);";
-            cmd.Parameters.AddWithValue("$ts", timestamp.ToString("o")); // ISO format
+            cmd.Parameters.AddWithValue("$ts", timestamp.ToString("o"));
             cmd.Parameters.AddWithValue("$ml", amountMl);
 
             await cmd.ExecuteNonQueryAsync();
         }
-
+        
         public async Task<int> GetTotalForDateAsync(DateTime date)
         {
             var from = date.Date;
@@ -149,6 +149,19 @@ namespace WaterTracker
             cmd.Parameters.AddWithValue("$k", key);
             cmd.Parameters.AddWithValue("$v", value);
 
+            await cmd.ExecuteNonQueryAsync();
+        }
+
+        public async Task UpadteEntryAsync(WaterEntry entry)
+        {
+            using var con = CreateConnection();
+            await con.OpenAsync();
+            var cmd = con.CreateCommand();
+            cmd.CommandText =
+                @"UPDATE WaterEntry SET Timestamp = $ts, AmountMl = $ml WHERE Id = $id;";
+            cmd.Parameters.AddWithValue("$ts", entry.Timestamp.ToString("o"));
+            cmd.Parameters.AddWithValue("$ml", entry.AmountMl);
+            cmd.Parameters.AddWithValue("$id", entry.Id);
             await cmd.ExecuteNonQueryAsync();
         }
     }
