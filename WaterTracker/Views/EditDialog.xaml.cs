@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WaterTracker.ViewModel;
 
 namespace WaterTracker.Views
 {
@@ -19,9 +20,10 @@ namespace WaterTracker.Views
     /// </summary>
     public partial class EditDialog : Window
     {
-        public EditDialog()
+        public EditDialog(EditDialogViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

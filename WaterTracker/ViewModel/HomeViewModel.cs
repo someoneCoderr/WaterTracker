@@ -179,8 +179,6 @@ namespace WaterTracker.ViewModel
             ProgressPercent = Math.Min(100, (double)TodayTotalMl / DailyGoalMl * 100.0);
         }
 
-        // Start-simple UX: Ziel direkt um 500 ml erhöhen (placeholder).
-        // Als nächstes machen wir daraus ein schönes Dialog-Fenster.
         private void ChangeGoalSimple()
         {
             DailyGoalMl = (DailyGoalMl == 2500) ? 3000 : 2500;
@@ -189,18 +187,32 @@ namespace WaterTracker.ViewModel
 
         public void EditEntry()
         {
-            MessageBox.Show("selected Waterentry" + SelectedWaterEntry.AmountText);
-            EditDialog editDialog = new EditDialog();
+            //MessageBox.Show("selected Waterentry" + SelectedWaterEntry.AmountText);
+            EditDialogViewModel vm = new EditDialogViewModel(SelectedWaterEntry);
+            EditDialog editDialog = new EditDialog(vm);
             editDialog.ShowDialog();
         }
     }
 
-    public class WaterEntryItemVm
+    public class WaterEntryItemVm : BaseViewModel
     {
-        private readonly WaterEntry _entry;
-        public WaterEntryItemVm(WaterEntry entry) => _entry = entry;
+        private WaterEntry _entry;
+        public WaterEntryItemVm(WaterEntry entry)
+        {
+            _entry = entry;
+        }
 
         public string TimeText => _entry.Timestamp.ToString("HH:mm");
         public string AmountText => $"{_entry.AmountMl} ml";
+
+        public WaterEntry Entry
+        {
+            get { return _entry; }
+            set
+            {
+                _entry = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
