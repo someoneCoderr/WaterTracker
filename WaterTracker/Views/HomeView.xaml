@@ -7,6 +7,7 @@
         xmlns:viewModel="clr-namespace:WaterTracker.ViewModel"
         d:DataContext="{d:DesignInstance Type=viewModel:HomeViewModel}"
         mc:Ignorable="d"
+        Icon="/Resources/waterdrop.png"
         Title="WaterTracker" MinHeight="700" MinWidth="500">
 
     <Grid Background="#0F172A">

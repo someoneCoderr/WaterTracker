@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WaterTracker"
         xmlns:viewModel="clr-namespace:WaterTracker.ViewModel"
         mc:Ignorable="d"
-        Title="WaterTracker" Height="450" Width="800">
+        Icon="/Resources/waterdrop.png"
+        Title="WaterTracker - Edit Entry" Height="450" Width="800">
     
     <Grid Background="{StaticResource BgBrush}">
         <Grid.RowDefinitions>

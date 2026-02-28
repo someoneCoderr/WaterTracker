@@ -8,8 +8,8 @@ namespace WaterTracker.Views
     {
         public HomeView()
         {
-            InitializeComponent();
             DataContext = new HomeViewModel();
+            InitializeComponent();
         }
     }
 }
