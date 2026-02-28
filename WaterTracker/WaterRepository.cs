@@ -151,6 +151,19 @@ namespace WaterTracker
 
             await cmd.ExecuteNonQueryAsync();
         }
+
+        public async Task UpadteEntryAsync(WaterEntry entry)
+        {
+            using var con = CreateConnection();
+            await con.OpenAsync();
+            var cmd = con.CreateCommand();
+            cmd.CommandText =
+                @"UPDATE WaterEntry SET Timestamp = $ts, AmountMl = $ml WHERE Id = $id;";
+            cmd.Parameters.AddWithValue("$ts", entry.Timestamp.ToString("o"));
+            cmd.Parameters.AddWithValue("$ml", entry.AmountMl);
+            cmd.Parameters.AddWithValue("$id", entry.Id);
+            await cmd.ExecuteNonQueryAsync();
+        }
     }
 
     public class WaterEntry

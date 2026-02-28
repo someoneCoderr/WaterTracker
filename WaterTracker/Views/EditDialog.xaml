@@ -31,9 +31,11 @@
                    Foreground="{StaticResource TextBrush}"/>
         <TextBox Text="{Binding WaterEntryProp.Entry.Timestamp}" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
         
-        <Button Content="Close" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
-                Style="{StaticResource PrimaryButton}"/>
+        <Button Content="Cnacel" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
+                Style="{StaticResource PrimaryButton}"
+                Command="{Binding CloseDialogCommand}"/>
         <Button Content="Save" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"
-                Style="{StaticResource PrimaryButton}"/>
+                Style="{StaticResource PrimaryButton}"
+                Command="{Binding UpdateEntryCommand}"/>
     </Grid>
 </Window>

@@ -124,7 +124,7 @@
                                                 Command="{Binding DataContext.EditEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                 Visibility="Collapsed"
                                                 Name="EditButton">
-                                            <Image Source="/Resources/editWhite.png" Width="16" Height="16"/>
+                                            <Image Source="/Resources/edit.png" Width="16" Height="16"/>
                                         </Button>
                                     </Grid>
                                     <DataTemplate.Triggers>

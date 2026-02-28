@@ -187,9 +187,15 @@ namespace WaterTracker.ViewModel
 
         public void EditEntry()
         {
-            //MessageBox.Show("selected Waterentry" + SelectedWaterEntry.AmountText);
-            EditDialogViewModel vm = new EditDialogViewModel(SelectedWaterEntry);
+            EditDialogViewModel vm = new EditDialogViewModel(SelectedWaterEntry, _repo);
             EditDialog editDialog = new EditDialog(vm);
+            vm.closeDialogEvent += (s, e) =>
+            {
+                editDialog.Close();
+                _ = LoadTodayAsync();
+                _ = LoadEntriesForDateAsync(SelectedDate);
+            };
+            // ShowDialog() stops the code here, so event subscribing must be done before (error like in Metrohm)
             editDialog.ShowDialog();
         }
     }
